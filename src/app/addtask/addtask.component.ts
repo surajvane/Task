@@ -16,15 +16,13 @@ public msg:String="";
   add_task(t:any,d:any,s:any)
   {var obj={title:t.value,description:d.value,status:s.value,datetime:Date.now()
   }
+  console.log(obj);
+  this.crud.postData("Task",obj).subscribe((res)=>{
+  this.msg="Task added";
+  },
+  (err)=>{
 
-  
-console.log(obj);
-this.crud.postData("task",obj).subscribe((res)=>{
-this.msg="Task added";
-},
-(err)=>{
-
-})
-  }
+  })
+}
 
 }
