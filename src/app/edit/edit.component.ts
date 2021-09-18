@@ -19,7 +19,7 @@ export class EditComponent implements OnInit {
     console.log(this.route)
     var titleId = this.route.snapshot.params['EditId']
     console.log(titleId)
-    this.service.fetchData('task/'+titleId).subscribe((res:any)=>{
+    this.service.fetchData('Task/'+titleId).subscribe((res:any)=>{
       console.log(res);
       this.Title = res['title']
       this.Desc = res['description']
@@ -36,7 +36,7 @@ export class EditComponent implements OnInit {
     console.log(obj)
     var titleId = this.route.snapshot.params['titleId'] 
   
-    this.service.putData('task/'+titleId,obj).subscribe((res:any)=>{
+    this.service.putData('Task/'+titleId,obj).subscribe((res:any)=>{
       console.log(res)
       this.router.navigate(['/showtask'])
     }
@@ -46,3 +46,4 @@ export class EditComponent implements OnInit {
 
   }
 }
+
