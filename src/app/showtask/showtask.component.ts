@@ -14,36 +14,27 @@ export class ShowtaskComponent implements OnInit {
 
   constructor(private crud:CrudService) { }
   openTask(abc:any){
-  
     this.crud.fetchData('Task'+abc).subscribe((res:any)=>{
       this.result=res;
-     
-    
     },
     (err)=>{
-  console.log(err);
+      console.log(err);
     })
   }
   progressTask(abc:any){
-    
     this.crud.fetchData('Task'+abc).subscribe((res:any)=>{
       this.progress=res;
-     
-    
     },
     (err)=>{
-  console.log(err);
+      console.log(err);
     })
   }
   completeTask(abc:any){
-    
     this.crud.fetchData('Task'+abc).subscribe((res:any)=>{
       this.complete=res;
-     
-    
     },
     (err)=>{
-  console.log(err);
+      console.log(err);
     })
   }
   ngOnInit(): void { 
@@ -51,9 +42,9 @@ export class ShowtaskComponent implements OnInit {
     this.progressTask("?status=2");
     this.completeTask("?status=3");
   }
-  onItemDrag(Dragitem:any) {
-   
-  var obj=Dragitem.target.attributes.for.value.split('#'); 
+  
+  onItemDrag(event:any) {
+  var obj=event.target.attributes.for.value.split('#'); 
   console.log("fromdrag")
   console.log(obj); 
   localStorage.setItem("title",obj[0]);
@@ -61,42 +52,41 @@ export class ShowtaskComponent implements OnInit {
   localStorage.setItem("status",obj[2]);
   localStorage.setItem("datetime",obj[3]);
   localStorage.setItem("id",obj[4]);
- 
-  console.log(Dragitem.target);
+  console.log(event.target);
   }
   
-  
-  onItemDrop(Dropitem:any) { 
-    var t=this.progress.push(Dropitem.dragData);
-    console.log("drg data "+Dropitem.dragData);
+  onItemDrop(event: any) { 
+    var t=this.progress.push(event.dragData);
+    console.log("drg data "+event.dragData);
     console.log(this.progress)
     console.log(this.result);
+    var position=this.result.indexOf(event.dragData);
+    this.result.splice(position,1);
+    console.log(this.result);
+    
+    // console.log(event);
+    // console.log(event.nativeEvent);
 
-   
-    this.result.splice(this.result.indexOf(Dropitem.dragData),1);
-      console.log(this.result);
-
-      localStorage.setItem("status","2");
-      var obj={
-        title:localStorage.getItem("title"),
-        description:localStorage.getItem("description"),
-        status:localStorage.getItem("status"),
-        datetime:localStorage.getItem("datetime"),
-        id:localStorage.getItem("id")
-      }
-      console.log(obj)
-      console.log("collection name");
-      console.log(`Task?id=${obj.id}`,obj);
-      
-      this.crud.putData(`Task/${obj.id}`,obj).subscribe(
-        (response:any)=>{
-      console.log(response);
-    },
-     (err:any)=>{
-      console.log(err);
-
-    })   
-}
+    localStorage.setItem("status","2");
+    var obj={
+      title:localStorage.getItem("title"),
+      description:localStorage.getItem("description"),
+      status:localStorage.getItem("status"),
+      datetime:localStorage.getItem("datetime"),
+      id:localStorage.getItem("id")
+    }
+    console.log(obj)
+    console.log("collection name");
+    console.log(`Task?id=${obj.id}`,obj);
+    this.crud.putData(`Task/${obj.id}`,obj).subscribe(
+      (res:any)=>{
+    console.log(res);
+    },(err:any)=>{
+    console.log(err);
+    }
+    )
+    
+  }
   
   onItemDropComplete(DropComplete:any) {
     this.complete.push(DropComplete.dragData);
@@ -115,11 +105,11 @@ export class ShowtaskComponent implements OnInit {
     }
     console.log(obj)
     
-    this.crud.putData("Task/"+obj.id,obj).subscribe((res:any)=>{
-        console.log(res);
-    },(error:any)=>{
-
+    this.crud.putData(`Task/${obj.id}`,obj).subscribe((res:any)=>{
+        console.log(res,"from complete");
+    },(err:any)=>{
+    console.log(err);
     })
   } 
- 
 }
+
