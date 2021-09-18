@@ -34,7 +34,7 @@ export class EditComponent implements OnInit {
     console.log(a1)
     var obj = {title:a1,description:a2,status:a3,datetime:Date.now()}
     console.log(obj)
-    var titleId = this.route.snapshot.params['titleId'] 
+    var titleId = this.route.snapshot.params['EditId'] 
   
     this.service.putData('Task/'+titleId,obj).subscribe((res:any)=>{
       console.log(res)
@@ -43,7 +43,5 @@ export class EditComponent implements OnInit {
     ,(err:any)=>{
       console.log(err)
     })
-
   }
 }
-
