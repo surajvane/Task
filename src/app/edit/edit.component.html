@@ -5,6 +5,7 @@
     <input type="text" class="form-control" value="{{Title}}" #x1 /><br>
     <label>Description:</label>
     <textarea class="form-control" value="{{Desc}}" #x2></textarea>
+    <br>
     <select #x3 value="{{status}}">
         <option>Please Select Status</option>
         <option value="1">Open</option>
@@ -12,6 +13,7 @@
         <option value="3" disabled>Completed</option>
     </select>
     <br>
-    <button (click)="update(x1.value,x2.value,x3.value)">edit</button>
+    <br>
+    <button class="btn btn-primary"  (click)="update(x1.value,x2.value,x3.value)">edit</button>
     
 </div>
